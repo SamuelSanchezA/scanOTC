@@ -13,9 +13,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <uses-permission android:name="android.permissions.CAMERA" />
+
+                <uses-feature android:name="android.hardware.camera" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".results"></activity>
     </application>
 
 </manifest>
