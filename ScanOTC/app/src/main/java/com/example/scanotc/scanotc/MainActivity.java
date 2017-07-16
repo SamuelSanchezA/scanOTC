@@ -18,6 +18,7 @@ package com.example.scanotc.scanotc;
         import android.annotation.TargetApi;
         import android.app.ActionBar;
         import android.app.Activity;
+        import android.content.Intent;
         import android.content.pm.ActivityInfo;
         import android.content.pm.PackageManager;
         import android.os.Build;
@@ -235,10 +236,19 @@ public class MainActivity extends Activity implements OnScanListener {
         GetProductThroughUPC getProductThroughUPC = new GetProductThroughUPC(this);
         universalProductCode = modifyUPCString(universalProductCode);
         Log.i("Modded", universalProductCode);
-        getProductThroughUPC.execute(universalProductCode);
-        Log.i("Returned", getProductThroughUPC.toString());
-        mBarcodePicker.stopScanning();
-        mToast.show();
+        String returnValue = "";
+        try{
+            returnValue = getProductThroughUPC.execute(universalProductCode).get();
+        }
+        catch (Exception e){
+            Log.i("Exception", e.toString());
+        }
+        Intent intent = new Intent(this, results.class);
+        intent.putExtra("resultString", returnValue);
+        Log.i("Returned", returnValue);
+        startActivity(intent);
+        finish();
+//        mToast.show();
     }
 
     private String modifyUPCString(String code){

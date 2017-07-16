@@ -40,13 +40,17 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
             String result = "";
             String line = "";
+            int count = 0;
             while((line = bf.readLine()) != null){
+                Log.i("Line " + count, line);
+                count++;
                 result += line;
             }
             bf.close();
             inputStream.close();
             httpURLConnection.disconnect();
             Log.i("Result", result);
+
             return result;
         }
         catch(Exception e){
