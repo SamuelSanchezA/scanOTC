@@ -10,6 +10,9 @@ import android.widget.Toast;
  * Created by sham on 7/15/17.
  */
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -37,6 +40,9 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
             Log.i("Response", httpURLConnection.getResponseMessage());
+            Log.v("DataFound", inputStream.toString());
+
+
             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
             String result = "";
             String line = "";
@@ -49,9 +55,17 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
             bf.close();
             inputStream.close();
             httpURLConnection.disconnect();
+            JSONObject jsonData = new JSONObject(result);
+            String jsonString = jsonData.getString("items");
+            jsonString = jsonString.substring(1);
+            jsonString = jsonString.substring(0, jsonString.length() - 1);
+
+            jsonData = new JSONObject(jsonString);
+
+            Log.v("nameJSON", jsonData.getString("name"));
             Log.i("Result", result);
 
-            return result;
+            return jsonData.getString("name");
         }
         catch(Exception e){
             Log.i("Error", e.toString());
