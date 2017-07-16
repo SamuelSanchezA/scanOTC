@@ -31,6 +31,15 @@ public class drugApiCall extends AsyncTask<String, String, String>{
     protected String doInBackground(String... params){
 
         // Hardcoded api endpoint for example:
+        // example endpoint for ndc #:
+        //  https://api.fda.gov/drug/event.json?search=patient.drug.openfda.product_ndc=[ndc_#_here_ex:0573-01504]
+        //
+        // example endpoint for drug brand_name:
+        //  https://api.fda.gov/drug/event.json?search=patient.drug.brand_name=[brand_name_ex:advil]
+        //
+        // example endpoint for drug generic_name:
+        // https://api.fda.gov/drug/event.json?search=patient.drug.generic_name=[generic_name_ex:IBUPFROFEN]
+
         String login_url = "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:\"fatigue\"&limit=1";
         try{
             URL url = new URL(login_url);
