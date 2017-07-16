@@ -30,8 +30,8 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
         // If key fails, sign up for api key and swap at "apiKey" field in url
         // Walmart API URL Format: http://api.walmartlabs.com/v1/items?apiKey={apiKey}&upc=035000521019
         // Key: w35vtdxspscd2sfhczjca3wt
-        String type = params[0];
-        String login_url = "http://api.walmartlabs.com/v1/items?apiKey=w35vtdxspscd2sfhczjca3wt&upc=035000521019";
+        String upc = params[0];
+        String login_url = "http://api.walmartlabs.com/v1/items?apiKey=w35vtdxspscd2sfhczjca3wt&upc=" + upc;
         try{
             URL url = new URL(login_url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
