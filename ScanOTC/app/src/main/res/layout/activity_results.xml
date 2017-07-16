@@ -56,12 +56,29 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/resultTextView"
+            android:id="@+id/brandTextView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:textSize="25dp"
             android:layout_weight="1"
             android:padding="10dp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#0d0f04"/>
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textSize="23dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#0d0f04"/>
+        
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/advilImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@raw/advil"/>
     </LinearLayout>
 </FrameLayout>
