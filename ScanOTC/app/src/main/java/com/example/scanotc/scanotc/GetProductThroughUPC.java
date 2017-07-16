@@ -25,6 +25,7 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
     GetProductThroughUPC(Context ctx){
         context = ctx;
     }
+
     @Override
     protected String doInBackground(String... params){
         // If key fails, sign up for api key and swap at "apiKey" field in url
