@@ -27,6 +27,7 @@ public class GetProductThroughUPC extends AsyncTask<String, String, String> {
     }
     @Override
     protected String doInBackground(String... params){
+        // If key fails, sign up for api key and swap at "apiKey" field in url
         // Walmart API URL Format: http://api.walmartlabs.com/v1/items?apiKey={apiKey}&upc=035000521019
         // Key: w35vtdxspscd2sfhczjca3wt
         String type = params[0];

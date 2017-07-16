@@ -11,9 +11,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         GetProductThroughUPC getProductThroughUPC = new GetProductThroughUPC(this);
-        String type = "";
-        String username = "";
-        String password = "";
-        getProductThroughUPC.execute(type, username, password);
+        String universalProductCode = "";
+        // Initialize universalProductCode with Mario's barcode scanner
+        // Here!
+        
+//        getProductThroughUPC.execute();
     }
 }
