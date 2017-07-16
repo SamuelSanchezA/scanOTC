@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,21 +28,20 @@ public class drugApiCall extends AsyncTask<String, String, String>{
     drugApiCall(Context ctx){
         context = ctx;
     }
+    String name;
+
 
     @Override
     protected String doInBackground(String... params){
 
-        // Hardcoded api endpoint for example:
-        // example endpoint for ndc #:
-        //  https://api.fda.gov/drug/event.json?search=patient.drug.openfda.product_ndc=[ndc_#_here_ex:0573-01504]
-        //
-        // example endpoint for drug brand_name:
-        //  https://api.fda.gov/drug/event.json?search=patient.drug.brand_name=[brand_name_ex:advil]
-        //
-        // example endpoint for drug generic_name:
-        // https://api.fda.gov/drug/event.json?search=patient.drug.generic_name=[generic_name_ex:IBUPFROFEN]
+        String nameStr = params[0];
+        String arr[] = nameStr.split(" ", 2);
+        name = arr[0];
 
-        String login_url = "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:\"fatigue\"&limit=1";
+        String login_url = "https://api.fda.gov/drug/label.json?api_key=9TTFqn5NazzM1QRtCUIkRAVYfvFSalPq7pHlMXRC&search=patient.drug.brand_name=" + name;
+
+
+
         try{
             URL url = new URL(login_url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -63,5 +64,24 @@ public class drugApiCall extends AsyncTask<String, String, String>{
         }
 
         return "";
+    }
+
+    @Override
+    protected void onPostExecute(String e) {
+        super.onPostExecute(e);
+
+        // Toasts to be replaced with calls to other activities:
+        if (name.equals("Advil")){
+            Toast.makeText(context.getApplicationContext(),
+                    "Name:" + name, Toast.LENGTH_SHORT).show();
+        }
+        else if (name.equals("Tylenol")){
+            Toast.makeText(context.getApplicationContext(),
+                    "Name:" + name, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(context.getApplicationContext(),
+                    "Name:" + name, Toast.LENGTH_SHORT).show();
+        }
     }
 }
