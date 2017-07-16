@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 public class results extends AppCompatActivity {
 
     private ImageButton toCam;
+    private ImageButton toList;
+    private ImageButton toSearch;
     private String resultString;
 
     @Override
@@ -18,6 +20,9 @@ public class results extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         toCam = (ImageButton) findViewById(R.id.cam_button);
+        toList = (ImageButton) findViewById(R.id.list_button);
+        toSearch = (ImageButton) findViewById(R.id.search_button);
+
         toCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
