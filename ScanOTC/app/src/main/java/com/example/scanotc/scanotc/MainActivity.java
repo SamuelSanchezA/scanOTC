@@ -16,13 +16,21 @@ package com.example.scanotc.scanotc;
  */
         import android.Manifest;
         import android.annotation.TargetApi;
+        import android.app.ActionBar;
         import android.app.Activity;
+        import android.content.Intent;
         import android.content.pm.ActivityInfo;
         import android.content.pm.PackageManager;
         import android.os.Build;
         import android.os.Bundle;
+        import android.support.constraint.ConstraintLayout;
+        import android.util.Log;
+        import android.view.MotionEvent;
+        import android.view.View;
         import android.view.Window;
         import android.view.WindowManager;
+        import android.widget.Button;
+        import android.widget.LinearLayout;
         import android.widget.Toast;
 
         import com.scandit.barcodepicker.BarcodePicker;
@@ -56,15 +64,17 @@ public class MainActivity extends Activity implements OnScanListener {
     private boolean mPaused = true;
     private Toast mToast = null;
 
+    private String universalProductCode = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ScanditLicense.setAppKey(sScanditSdkAppKey);
 
         // Initialize and start the bar code recognition.
         initializeAndStartBarcodeScanning();
+
     }
 
     @Override
@@ -135,7 +145,7 @@ public class MainActivity extends Activity implements OnScanListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        setContentView(R.layout.activity_main);
 
         // The scanning behavior of the barcode picker is configured through scan
         // settings. We start with empty scan settings and enable a very generous
@@ -188,18 +198,19 @@ public class MainActivity extends Activity implements OnScanListener {
         BarcodePicker picker = new BarcodePicker(this, settings);
 
         setContentView(picker);
+
         mBarcodePicker = picker;
 
         // Register listener, in order to be notified about relevant events
         // (e.g. a successfully scanned bar code).
         mBarcodePicker.setOnScanListener(this);
-
     }
 
     /**
      *  Called when a barcode has been decoded successfully.
      */
     public void didScan(ScanSession session) {
+
         String message = "";
         for (Barcode code : session.getNewlyRecognizedCodes()) {
             String data = code.getData();
@@ -218,7 +229,33 @@ public class MainActivity extends Activity implements OnScanListener {
             mToast.cancel();
         }
         mToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        mToast.show();
+        Log.i("Message", message);
+        universalProductCode = message;
+        // Initialize universalProductCode with Mario's barcode scanner
+        // Here!
+        GetProductThroughUPC getProductThroughUPC = new GetProductThroughUPC(this);
+        universalProductCode = modifyUPCString(universalProductCode);
+        Log.i("Modded", universalProductCode);
+        String returnValue = "";
+        try{
+            returnValue = getProductThroughUPC.execute(universalProductCode).get();
+        }
+        catch (Exception e){
+            Log.i("Exception", e.toString());
+        }
+        Intent intent = new Intent(this, results.class);
+        intent.putExtra("resultString", returnValue);
+        Log.i("Returned", returnValue);
+        startActivity(intent);
+        finish();
+//        mToast.show();
+    }
+
+    private String modifyUPCString(String code){
+        String modded = code;
+        modded = code.replace("\n", "").replace("\r", "");
+        modded = code.substring(0,code.indexOf('('));
+        return modded;
     }
 
     @Override
