@@ -60,17 +60,19 @@ public class MainActivity extends Activity implements OnScanListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //initializeAndStartBarcodeScanning();
+
         ScanditLicense.setAppKey(sScanditSdkAppKey);
 
         // Initialize and start the bar code recognition.
         initializeAndStartBarcodeScanning();
+
         GetProductThroughUPC getProductThroughUPC = new GetProductThroughUPC(this);
         String universalProductCode = "";
         // Initialize universalProductCode with Mario's barcode scanner
         // Here!
         
-//        getProductThroughUPC.execute(universalProductCode);
+        getProductThroughUPC.execute(universalProductCode);
 
     }
 
@@ -142,6 +144,7 @@ public class MainActivity extends Activity implements OnScanListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_main);
 
 
         // The scanning behavior of the barcode picker is configured through scan
